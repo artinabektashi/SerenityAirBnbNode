@@ -8,5 +8,6 @@ import { CustomRepositoryModule } from 'src/common/db/CustomRepository.module';
   imports: [CustomRepositoryModule.forCustomRepository([RoomRepository])],
   providers: [RoomService],
   controllers: [RoomController],
+  exports: [RoomService],
 })
 export class RoomModule {}

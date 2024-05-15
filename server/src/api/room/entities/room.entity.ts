@@ -4,7 +4,7 @@ import { Column, Entity, OneToMany } from 'typeorm';
 
 @Entity('room')
 export class Room extends AuditEntity {
-  @Column()
+  @Column({ default: false })
   is_booked: boolean;
 
   @Column({ nullable: true })

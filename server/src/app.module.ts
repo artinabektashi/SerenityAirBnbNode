@@ -17,10 +17,16 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { RoomModule } from './api/room/room.module';
 import { BookedRoomModule } from './api/booked-room/booked-room.module';
 import { RoleModule } from './api/role/role.module';
+import { join } from 'path';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(config as DataSourceOptions),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+      serveRoot: '/public',
+    }),
     ConfigModule.forRoot({
       envFilePath: ['.env'],
     }),

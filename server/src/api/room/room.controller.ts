@@ -5,6 +5,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Put,
   UploadedFile,
@@ -42,17 +43,24 @@ export class RoomController {
     return this.roomService.findAll();
   }
 
+  @Get('/room-types')
+  async findRoomTypes(): Promise<string[]> {
+    return this.roomService.getDistinctRoomTypes();
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Room> {
     return this.roomService.findOne(id);
   }
 
-  @Put(':id')
+  @Patch(':id')
+  @UseInterceptors(FileInterceptor('file', multerOptions))
   async update(
     @Param('id') id: string,
     @Body() updateRoomDto: UpdateRoomDto,
+    @UploadedFile() file?: Express.Multer.File,
   ): Promise<Room> {
-    return this.roomService.update(id, updateRoomDto);
+    return this.roomService.update(id, updateRoomDto, file);
   }
 
   @Delete(':id')

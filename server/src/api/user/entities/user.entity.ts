@@ -1,17 +1,12 @@
 import { Exclude } from 'class-transformer';
-import { Column, Entity, Index } from 'typeorm';
+import { Column, Entity, Index, JoinTable, ManyToMany } from 'typeorm';
 import { UserGender } from '../enums/userGender.enum';
 import { UserRoles } from '../enums/roles.enum';
 import { AuditEntity } from '../../../common/db/customBaseEntites/AuditEntity';
+import Role from 'src/api/role/entities/role.entity';
 
 @Entity('users')
 export class User extends AuditEntity {
-  @Column({
-    type: 'enum',
-    default: UserRoles.USER,
-    enum: UserRoles,
-  })
-  role: UserRoles;
   @Column({ default: false })
   isRoleOverridden: boolean;
 
@@ -52,4 +47,15 @@ export class User extends AuditEntity {
 
   @Column({ nullable: true })
   timezone: string;
+
+  @Column({
+    type: 'enum',
+    default: UserRoles.USER,
+    enum: UserRoles,
+  })
+  role: UserRoles;
+
+  @ManyToMany(() => Role, (roles) => roles.users)
+  @JoinTable()
+  roles: Role[];
 }

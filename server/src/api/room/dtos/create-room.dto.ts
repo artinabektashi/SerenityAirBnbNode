@@ -3,9 +3,6 @@ import { IsOptional, IsString } from 'class-validator';
 
 export class CreateRoomDto {
   @ApiProperty()
-  is_booked: boolean;
-
-  @ApiProperty()
   room_price: number;
 
   @IsString()

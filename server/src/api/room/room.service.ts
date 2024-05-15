@@ -1,6 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { CreateRoomDto } from './dtos/create-room.dto';
 import { Room } from './entities/room.entity';
 import { UpdateRoomDto } from './dtos/update-room.dto';
@@ -36,16 +34,55 @@ export class RoomService {
     return this.roomRepository.findOne({ where: { uuid: id } });
   }
 
-  async update(id: string, updateRoomDto: UpdateRoomDto): Promise<Room> {
-    const room = await this.findOne(id);
+  async update(
+    id: string,
+    updateRoomDto: UpdateRoomDto,
+    file?: Express.Multer.File,
+  ): Promise<Room> {
+    let room = await this.findOne(id);
+
     if (!room) {
       throw new NotFoundException('Room not found');
     }
-    Object.assign(room, updateRoomDto);
+
+    room = {
+      ...room,
+      ...updateRoomDto,
+    };
+
+    if (file) {
+      const apiUrl = process.env.APP_URL.endsWith('/api')
+        ? process.env.APP_URL.slice(0, -4)
+        : process.env.APP_URL;
+      const filePath = `${apiUrl}/${multerConfig.dest}/${file.filename}`;
+      room.photo = filePath;
+    }
+
     return this.roomRepository.save(room);
   }
 
   async remove(id: string): Promise<void> {
-    await this.roomRepository.delete(id);
+    const room = await this.findOne(id);
+    if (!room) {
+      throw new NotFoundException('Room not found');
+    }
+    await this.roomRepository.remove(room);
+  }
+
+  async getDistinctRoomTypes(): Promise<string[]> {
+    const rooms = await this.roomRepository.find();
+
+    const distinctRoomTypes = [...new Set(rooms.map((room) => room.room_type))];
+
+    return distinctRoomTypes;
+  }
+
+  async updateIsBookedStatus(roomId: string, isBooked: boolean): Promise<Room> {
+    const room = await this.findOne(roomId);
+    if (!room) {
+      throw new NotFoundException('Room not found');
+    }
+    room.is_booked = isBooked;
+    return this.roomRepository.save(room);
   }
 }
