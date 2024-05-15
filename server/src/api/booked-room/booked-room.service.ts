@@ -1,9 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { BookedRoomRepository } from './repository/booked-room.repository';
 import { RoomService } from '../room/room.service';
 import { CreateBookingDto } from './dtos/create-booking.dto';
 import { BookedRoom } from './entities/booked-room.entity';
 import { UserService } from '../user/user.service';
+import { LessThanOrEqual, MoreThanOrEqual } from 'typeorm';
 
 @Injectable()
 export class BookedRoomService {
@@ -28,6 +33,19 @@ export class BookedRoomService {
 
     const totalGuests =
       createBookingDto.num_of_adults + (createBookingDto.num_of_children || 0);
+
+    const { check_in, check_out } = createBookingDto;
+
+    const isRoomAvailable = await this.checkRoomAvailability(
+      roomId,
+      check_in,
+      check_out,
+    );
+    if (!isRoomAvailable) {
+      throw new ConflictException(
+        'Room is not available for the selected dates',
+      );
+    }
 
     const bookedRoom = this.bookedRoomRepository.create({
       ...createBookingDto,
@@ -74,5 +92,21 @@ export class BookedRoomService {
       throw new NotFoundException('Booking not found');
     }
     return booking;
+  }
+
+  private async checkRoomAvailability(
+    roomId: string,
+    checkIn: Date,
+    checkOut: Date,
+  ): Promise<boolean> {
+    const room = await this.roomService.findOne(roomId);
+    const overlappingBooking = await this.bookedRoomRepository.findOne({
+      where: {
+        room: room,
+        check_in: LessThanOrEqual(checkOut),
+        check_out: MoreThanOrEqual(checkIn),
+      },
+    });
+    return !overlappingBooking;
   }
 }

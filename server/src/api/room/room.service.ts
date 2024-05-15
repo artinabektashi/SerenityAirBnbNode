@@ -85,4 +85,25 @@ export class RoomService {
     room.is_booked = isBooked;
     return this.roomRepository.save(room);
   }
+
+  async getAvailableRooms(
+    checkIn: Date,
+    checkOut: Date,
+    roomType?: string,
+  ): Promise<Room[]> {
+    let query = this.roomRepository
+      .createQueryBuilder('room')
+      .leftJoinAndSelect(
+        'room.booked_room',
+        'bookedRoom',
+        'bookedRoom.check_out < :checkIn OR bookedRoom.check_in > :checkOut',
+        { checkIn, checkOut },
+      );
+
+    if (roomType) {
+      query = query.where('room.room_type = :roomType', { roomType });
+    }
+
+    return query.getMany();
+  }
 }
