@@ -1,7 +1,7 @@
 import { User } from '../../user/entities/user.entity';
 
 export type TTokensUser = {
-  accessToken: string;
+  token: string;
   refreshToken: string;
   user: User;
 };

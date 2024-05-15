@@ -99,10 +99,9 @@ export class BookedRoomService {
     checkIn: Date,
     checkOut: Date,
   ): Promise<boolean> {
-    const room = await this.roomService.findOne(roomId);
     const overlappingBooking = await this.bookedRoomRepository.findOne({
       where: {
-        room: room,
+        room: { uuid: roomId },
         check_in: LessThanOrEqual(checkOut),
         check_out: MoreThanOrEqual(checkIn),
       },

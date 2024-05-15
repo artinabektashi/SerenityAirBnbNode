@@ -12,44 +12,14 @@ export class UsersSeeder implements Seeder {
 
     const users = userRepository.create([
       {
-        firstName: 'Argjend',
-        lastName: 'Reqica',
-        email: `argjend@kutia.net`,
-        username: `Gjendi`,
+        first_name: 'Artina',
+        last_name: 'B',
+        email: `artina@gmail.com`,
+        username: `Artina`,
         password:
           '$2b$10$nwibVTEz86tgqAAmQNY2eOkppbDvlAhfae1azWUdx9wBx5vbnpwQC',
-        gender: UserGender.MALE,
-        phone: '+38344740402',
-      },
-      {
-        firstName: 'Lendrit',
-        lastName: 'Shala',
-        email: `lendrit@kutia.net`,
-        username: `Daddy-man`,
-        password:
-          '$2b$10$nwibVTEz86tgqAAmQNY2eOkppbDvlAhfae1azWUdx9wBx5vbnpwQC',
-        gender: UserGender.MALE,
-        phone: '+38344740402',
-      },
-      {
-        firstName: 'Leutrim',
-        lastName: 'Shala',
-        email: `leutrim@kutia.net`,
-        username: `Leoooo`,
-        password:
-          '$2b$10$nwibVTEz86tgqAAmQNY2eOkppbDvlAhfae1azWUdx9wBx5vbnpwQC',
-        gender: UserGender.MALE,
-        phone: '+38344740402',
-      },
-      {
-        firstName: 'Blend',
-        lastName: 'Mehani',
-        email: `blend@kutia.net`,
-        username: `Blendi`,
-        password:
-          '$2b$10$nwibVTEz86tgqAAmQNY2eOkppbDvlAhfae1azWUdx9wBx5vbnpwQC',
-        gender: UserGender.MALE,
-        phone: '+38344******',
+        gender: UserGender.FEMALE,
+        phone: '+383447323202',
       },
     ]);
     await userRepository.save(users);
@@ -57,12 +27,7 @@ export class UsersSeeder implements Seeder {
 
   async drop(): Promise<any> {
     const userRepository = AppDataSource.getRepository(User);
-    const emails = [
-      'argjend@kutia.net',
-      'blend@kutia.net',
-      'lendrit@kutia.net',
-      'leutrim@kutia.net',
-    ];
+    const emails = ['artina@gmail.com'];
     await userRepository.delete({ email: In(emails) });
   }
 }

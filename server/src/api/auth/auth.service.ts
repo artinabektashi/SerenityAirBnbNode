@@ -127,7 +127,7 @@ export class AuthService implements IAuthService {
     ]);
 
     return {
-      accessToken: at,
+      token: at,
       refreshToken: rt,
     };
   }
