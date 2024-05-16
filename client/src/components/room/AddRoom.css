@@ -1,0 +1,41 @@
+.add-room-container {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.add-room-form {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 60px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-room-title {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.add-room-message {
+  margin-top: 20px;
+}
+
+.room-photo-preview {
+  max-width: 400px;
+  max-height: 400px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+.add-room-button {
+  margin-top: 10px;
+}
+
+@media (min-width: 768px) {
+  .add-room-form {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}

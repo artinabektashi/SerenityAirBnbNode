@@ -1,0 +1,12 @@
+.edit-room-form {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+@media (min-width: 768px) {
+  .edit-room-form {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
