@@ -126,7 +126,7 @@ const ExistingRooms = () => {
 
               <tbody>
                 {currentRooms.map((room) => (
-                  <tr key={room.id} className="text-center">
+                  <tr key={room.uuid} className="text-center">
                     <td>{room.uuid}</td>
                     <td>{room.room_type}</td>
                     <td>{room.room_price}</td>

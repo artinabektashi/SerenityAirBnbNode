@@ -11,7 +11,7 @@ const Room = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [roomsPerPage] = useState(6);
-  const [filteredData, setFilteredData] = useState([{ id: "" }]);
+  const [filteredData, setFilteredData] = useState([{ uuid: "" }]);
 
   useEffect(() => {
     setIsLoading(true);

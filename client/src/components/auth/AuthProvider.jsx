@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("userId", decodedUser.id);
     localStorage.setItem("userRole", decodedUser.role);
     localStorage.setItem("token", token);
+    console.log(decodedUser);
     setUser(decodedUser);
   };
 

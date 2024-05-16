@@ -7,8 +7,8 @@ import "./AddRoom.css"; // Import the CSS file
 const AddRoom = () => {
   const [newRoom, setNewRoom] = useState({
     photo: null,
-    roomType: "",
-    roomPrice: "",
+    room_type: "",
+    room_price: "",
   });
 
   const [successMessage, setSuccessMessage] = useState("");
@@ -18,7 +18,7 @@ const AddRoom = () => {
   const handleRoomInputChange = (e) => {
     const name = e.target.name;
     let value = e.target.value;
-    if (name === "roomPrice") {
+    if (name === "room_price") {
       if (!isNaN(value)) {
         value = parseInt(value);
       } else {
@@ -39,12 +39,12 @@ const AddRoom = () => {
     try {
       const success = await addRoom(
         newRoom.photo,
-        newRoom.roomType,
-        newRoom.roomPrice
+        newRoom.room_type,
+        newRoom.room_price
       );
       if (success !== undefined) {
         setSuccessMessage("A new room was  added successfully !");
-        setNewRoom({ photo: null, roomType: "", roomPrice: "" });
+        setNewRoom({ photo: null, room_type: "", room_price: "" });
         setImagePreview("");
         setErrorMessage("");
       } else {
@@ -85,7 +85,7 @@ const AddRoom = () => {
               onSubmit={handleSubmit}
             >
               <div className="mb-3">
-                <label htmlFor="roomType" className="form-label">
+                <label htmlFor="room_type" className="form-label">
                   Room Type
                 </label>
                 <div>
@@ -96,16 +96,16 @@ const AddRoom = () => {
                 </div>
               </div>
               <div className="mb-3">
-                <label htmlFor="roomPrice" className="form-label">
+                <label htmlFor="room_price" className="form-label">
                   Room Price
                 </label>
                 <input
                   required
                   type="number"
                   className="form-control"
-                  id="roomPrice"
-                  name="roomPrice"
-                  value={newRoom.roomPrice}
+                  id="room_price"
+                  name="room_price"
+                  value={newRoom.room_price}
                   onChange={handleRoomInputChange}
                 />
               </div>

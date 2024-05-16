@@ -34,7 +34,7 @@ const BookingForm = () => {
   const getRoomPriceById = async (roomId) => {
     try {
       const response = await getRoomById(roomId);
-      setRoomPrice(response.roomPrice);
+      setRoomPrice(response.room_price);
     } catch (error) {
       throw new Error(error);
     }
@@ -90,7 +90,9 @@ const BookingForm = () => {
     try {
       const confirmationCode = await bookRoom(roomId, booking);
       setIsSubmitted(true);
-      navigate("/booking-success", { state: { message: confirmationCode } });
+      navigate("/booking-success", {
+        state: { message: confirmationCode.confirmationCode },
+      });
     } catch (error) {
       const errorMessage = error.message;
       console.log(errorMessage);

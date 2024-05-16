@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const RoomCard = ({ room }) => {
   return (
-    <Col key={room.id} className="mb-4" xs={12}>
+    <Col key={room.uid} className="mb-4" xs={12}>
       <Card className="cardi">
         <Card.Body className="cardi flex-wrap align-items-center">
           <div className="flex-shrrink-0 mr-3 mb-3 mb-md-0">

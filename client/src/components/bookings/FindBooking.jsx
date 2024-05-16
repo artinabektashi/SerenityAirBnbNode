@@ -12,9 +12,9 @@ const FindBooking = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [bookingInfo, setBookingInfo] = useState({
-    id: "",
+    uuid: "",
     bookingConfirmationCode: "",
-    room: { id: "", roomType: "" },
+    room: { id: "", room_type: "" },
     roomNumber: "",
     checkInDate: "",
     checkOutDate: "",
@@ -26,9 +26,9 @@ const FindBooking = () => {
   });
 
   const emptyBookingInfo = {
-    id: "",
+    uuid: "",
     bookingConfirmationCode: "",
-    room: { id: "", roomType: "" },
+    room: { uuid: "", room_type: "" },
     roomNumber: "",
     checkInDate: "",
     checkOutDate: "",
@@ -50,6 +50,7 @@ const FindBooking = () => {
 
     try {
       const data = await getBookingByConfirmationCode(confirmationCode);
+      console.log(data);
       setBookingInfo(data);
       setError(null);
     } catch (error) {
@@ -66,7 +67,7 @@ const FindBooking = () => {
 
   const handleBookingCancellation = async (bookingId) => {
     try {
-      await cancelBooking(bookingInfo.id);
+      await cancelBooking(bookingInfo.uuid);
       setIsDeleted(true);
       setSuccessMessage("Booking has been cancelled successfully!");
       setBookingInfo(emptyBookingInfo);
@@ -122,7 +123,7 @@ const FindBooking = () => {
                 </tr>
                 <tr>
                   <th scope="row">Room Type:</th>
-                  <td>{bookingInfo.room.roomType}</td>
+                  <td>{bookingInfo.room.room_type}</td>
                 </tr>
                 <tr>
                   <th scope="row">Check-in Date:</th>
@@ -165,7 +166,7 @@ const FindBooking = () => {
 
             {!isDeleted && (
               <button
-                onClick={() => handleBookingCancellation(bookingInfo.id)}
+                onClick={() => handleBookingCancellation(bookingInfo.uuid)}
                 className="btn btn-danger"
               >
                 Cancel Booking

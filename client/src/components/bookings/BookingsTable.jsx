@@ -52,11 +52,11 @@ const BookingsTable = ({ bookingInfo, handleBookingCancellation }) => {
         </thead>
         <tbody className="text-center">
           {filteredBookings.map((booking, index) => (
-            <tr key={booking.id}>
+            <tr key={booking.uuid}>
               <td>{index + 1}</td>
-              <td>{booking.id}</td>
-              <td>{booking.room.id}</td>
-              <td>{booking.room.roomType}</td>
+              <td>{booking.uuid}</td>
+              <td>{booking.room.uuid}</td>
+              <td>{booking.room.room_type}</td>
               <td>{booking.checkInDate}</td>
               <td>{booking.checkOutDate}</td>
               <td>{booking.guestName}</td>
@@ -68,7 +68,7 @@ const BookingsTable = ({ bookingInfo, handleBookingCancellation }) => {
               <td>
                 <button
                   className="btn btn-danger btn-sm"
-                  onClick={() => handleBookingCancellation(booking.id)}
+                  onClick={() => handleBookingCancellation(booking.uuid)}
                 >
                   Cancel
                 </button>

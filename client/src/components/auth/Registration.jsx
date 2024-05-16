@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const Registration = () => {
   const [registration, setRegistration] = useState({
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     email: "",
     password: "",
   });
@@ -58,7 +58,7 @@ const Registration = () => {
             name="firstName"
             type="text"
             className="form-control"
-            value={registration.firstName}
+            value={registration.first_name}
             onChange={handleInputChange}
           />
         </div>
@@ -70,7 +70,7 @@ const Registration = () => {
             name="lastName"
             type="text"
             className="form-control"
-            value={registration.lastName}
+            value={registration.last_name}
             onChange={handleInputChange}
           />
         </div>

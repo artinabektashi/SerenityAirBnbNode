@@ -8,11 +8,11 @@ export const api = axios.create({
 const token = localStorage.getItem("token");
 
 /* This function adds a new room to the database */
-export async function addRoom(photo, roomType, roomPrice) {
+export async function addRoom(photo, room_type, room_price) {
   const formData = new FormData();
   formData.append("photo", photo);
-  formData.append("roomType", roomType);
-  formData.append("roomPrice", roomPrice);
+  formData.append("room_type", room_type);
+  formData.append("room_price", room_price);
 
   const response = await api.post("/rooms/add/new-room", formData, {
     headers: {
@@ -63,8 +63,8 @@ export async function deleteRoom(roomId) {
 
 export async function updateRoom(roomId, roomData) {
   const formData = new FormData();
-  formData.append("roomType", roomData.roomType);
-  formData.append("roomPrice", roomData.roomPrice);
+  formData.append("room_type", roomData.room_type);
+  formData.append("room_price", roomData.room_price);
   formData.append("photo", roomData.photo);
   const response = await api.put(`/rooms/update/${roomId}`, formData, {
     headers: {

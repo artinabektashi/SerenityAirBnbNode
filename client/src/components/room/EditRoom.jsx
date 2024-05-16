@@ -6,8 +6,8 @@ import "./EditRoom.css";
 const EditRoom = () => {
   const [room, setRoom] = useState({
     photo: "",
-    roomType: "",
-    roomPrice: "",
+    room_type: "",
+    room_price: "",
   });
 
   const [imagePreview, setImagePreview] = useState("");
@@ -51,6 +51,8 @@ const EditRoom = () => {
 
     try {
       const response = await updateRoom(roomId, room);
+
+      console.log(response, 1);
       if (response.status === 200) {
         setSuccessMessage("Room updated successfully!");
         const updatedRoomData = await getRoomById(roomId);
@@ -83,28 +85,28 @@ const EditRoom = () => {
           )}
           <form className="edit-room-form" onSubmit={handleSubmit}>
             <div className="mb-3">
-              <label htmlFor="roomType" className="form-label hotel-color">
+              <label htmlFor="room_type" className="form-label hotel-color">
                 Room Type
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="roomType"
-                name="roomType"
-                value={room.roomType}
+                id="room_type"
+                name="room_type"
+                value={room.room_type}
                 onChange={handleInputChange}
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="roomPrice" className="form-label hotel-color">
+              <label htmlFor="room_price" className="form-label hotel-color">
                 Room Price
               </label>
               <input
                 type="number"
                 className="form-control"
-                id="roomPrice"
-                name="roomPrice"
-                value={room.roomPrice}
+                id="room_price"
+                name="room_price"
+                value={room.room_price}
                 onChange={handleInputChange}
               />
             </div>
@@ -123,7 +125,7 @@ const EditRoom = () => {
               />
               {imagePreview && (
                 <img
-                  src={`data:image/jpeg;base64,${imagePreview}`}
+                  src={`${imagePreview}`}
                   alt="Room preview"
                   style={{ maxWidth: "400px", maxHeight: "400" }}
                   className="mt-3"

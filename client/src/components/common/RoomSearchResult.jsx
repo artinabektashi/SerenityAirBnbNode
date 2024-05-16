@@ -25,7 +25,7 @@ const RoomSearchResult = ({ results, onClearSearch }) => {
           <h5 className="text-center mt-5">Search Results</h5>
           <Row>
             {paginatedResults.map((room) => (
-              <RoomCard key={room.id} room={room} />
+              <RoomCard key={room.uuid} room={room} />
             ))}
           </Row>
           <Row>

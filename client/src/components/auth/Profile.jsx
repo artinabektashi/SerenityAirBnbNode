@@ -9,17 +9,17 @@ import moment from "moment";
 
 const Profile = () => {
   const [user, setUser] = useState({
-    id: "",
+    uuid: "",
     email: "",
-    firstName: "",
-    lastName: "",
-    roles: [{ id: "", name: "" }],
+    first_name: "",
+    last_name: "",
+    // roles: [{ id: "", name: "" }],
   });
 
   const [bookings, setBookings] = useState([
     {
       id: "",
-      room: { id: "", roomType: "" },
+      room: { uuid: "", room_type: "" },
       checkInDate: "",
       checkOutDate: "",
       bookingConfirmationCode: "",
@@ -114,7 +114,7 @@ const Profile = () => {
                           First Name:
                         </label>
                         <div className="col-md-10">
-                          <p className="card-text">{user.firstName}</p>
+                          <p className="card-text">{user.first_name}</p>
                         </div>
                       </div>
                       <hr />
@@ -124,7 +124,7 @@ const Profile = () => {
                           Last Name:
                         </label>
                         <div className="col-md-10">
-                          <p className="card-text">{user.lastName}</p>
+                          <p className="card-text">{user.last_name}</p>
                         </div>
                       </div>
                       <hr />
@@ -139,7 +139,7 @@ const Profile = () => {
                       </div>
                       <hr />
 
-                      <div className="form-group row">
+                      {/* <div className="form-group row">
                         <label className="col-md-2 col-form-label fw-bold">
                           Roles:
                         </label>
@@ -152,7 +152,7 @@ const Profile = () => {
                             ))}
                           </ul>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -176,9 +176,9 @@ const Profile = () => {
                   <tbody>
                     {bookings.map((booking, index) => (
                       <tr key={index}>
-                        <td>{booking.id}</td>
+                        <td>{booking.uuid}</td>
                         <td>{booking.room.id}</td>
-                        <td>{booking.room.roomType}</td>
+                        <td>{booking.room.room_type}</td>
                         <td>
                           {moment(booking.checkInDate)
                             .subtract(1, "month")
