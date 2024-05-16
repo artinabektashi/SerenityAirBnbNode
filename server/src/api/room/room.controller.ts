@@ -8,6 +8,7 @@ import {
   Patch,
   Post,
   Put,
+  Query,
   UploadedFile,
   UseInterceptors,
   UsePipes,
@@ -20,8 +21,10 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UpdateRoomDto } from './dtos/update-room.dto';
 import { multerOptions } from 'src/common/middlewares/multer.middleware';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Public } from 'src/common/decorators/public.decorator';
+import { FilterDto } from './dtos/filter.dto';
 
-@Controller('room')
+@Controller('rooms')
 @ApiBearerAuth()
 @ApiTags('Room')
 @UsePipes(new ValidationPipe())
@@ -29,7 +32,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 export class RoomController {
   constructor(private readonly roomService: RoomService) {}
 
-  @Post()
+  @Post('add/new-room')
   @UseInterceptors(FileInterceptor('file', multerOptions))
   async create(
     @Body() createRoomDto: CreateRoomDto,
@@ -38,17 +41,26 @@ export class RoomController {
     return this.roomService.create(createRoomDto, file);
   }
 
-  @Get()
+  @Public()
+  @Get('all-rooms')
   async findAll(): Promise<Room[]> {
     return this.roomService.findAll();
   }
 
-  @Get('/room-types')
+  @Public()
+  @Get('available-rooms')
+  async findAvailableRooms(@Query() filterDto: FilterDto): Promise<Room[]> {
+    return this.roomService.getAvailableRooms(filterDto);
+  }
+
+  @Get('/room/types')
+  @Public()
   async findRoomTypes(): Promise<string[]> {
     return this.roomService.getDistinctRoomTypes();
   }
 
-  @Get(':id')
+  @Get('room/:id')
+  @Public()
   async findOne(@Param('id') id: string): Promise<Room> {
     return this.roomService.findOne(id);
   }

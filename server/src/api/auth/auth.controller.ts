@@ -32,7 +32,7 @@ export class AuthController implements IAuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Public()
-  @Post('register')
+  @Post('register-user')
   @HttpCode(HttpStatus.CREATED)
   async register(@Body() registerDto: RegisterDTO): Promise<Tokens> {
     return await this.authService.signup(registerDto);

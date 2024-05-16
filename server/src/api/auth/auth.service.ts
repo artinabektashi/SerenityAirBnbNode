@@ -32,23 +32,18 @@ export class AuthService implements IAuthService {
     private userRepository: Repository<User>,
   ) {}
 
-  async signup(registerDto: RegisterDTO): Promise<Tokens> {
+  async signup(registerDto: RegisterDTO): Promise<TTokensUser> {
     registerDto.password = await hashDataBrypt(registerDto.password);
-    delete registerDto.passwordConfirm;
-
-    const userRoleKey = UserRoles[registerDto.role];
-    const userPermissions = RolePermissions[userRoleKey];
 
     try {
       const user = await this.userRepository.save(
         this.userRepository.create({
           ...registerDto,
-          permissions: userPermissions,
         }),
       );
       const tokens = await this.getTokens(user.uuid);
       await this.updateRtHash(user.uuid, tokens.refreshToken);
-      return tokens;
+      return { ...tokens, user };
     } catch (error) {
       throw new InternalServerErrorException('User registration failed');
     }

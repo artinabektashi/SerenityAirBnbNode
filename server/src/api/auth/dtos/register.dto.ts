@@ -31,36 +31,6 @@ export class RegisterDTO {
   email: string;
 
   @IsString()
-  @Validate(IsUnique, [User])
-  @ApiProperty()
-  username: string;
-
-  @IsString()
   @ApiProperty()
   password: string;
-
-  @SameAs('password', {
-    message: "Password confirmation doesn't match.",
-  })
-  @IsNotEmpty()
-  @ApiProperty()
-  passwordConfirm: string;
-
-  @IsEnum(UserGender)
-  @ApiProperty()
-  gender: UserGender;
-
-  @IsString()
-  @IsOptional()
-  @ApiProperty()
-  phone: string;
-
-  @IsString()
-  @IsOptional()
-  @ApiProperty()
-  timezone: string;
-
-  @IsEnum(UserRoles)
-  @ApiProperty()
-  role: number;
 }

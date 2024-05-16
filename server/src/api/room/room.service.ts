@@ -4,6 +4,7 @@ import { Room } from './entities/room.entity';
 import { UpdateRoomDto } from './dtos/update-room.dto';
 import { RoomRepository } from './repository/room.repository';
 import { multerConfig } from 'src/common/middlewares/multer.middleware';
+import { FilterDto } from './dtos/filter.dto';
 
 @Injectable()
 export class RoomService {
@@ -86,18 +87,15 @@ export class RoomService {
     return this.roomRepository.save(room);
   }
 
-  async getAvailableRooms(
-    checkIn: Date,
-    checkOut: Date,
-    roomType?: string,
-  ): Promise<Room[]> {
+  async getAvailableRooms(filterDto: FilterDto): Promise<Room[]> {
+    const { checkInDate, checkOutDate, roomType } = filterDto;
     let query = this.roomRepository
       .createQueryBuilder('room')
       .leftJoinAndSelect(
         'room.booked_room',
         'bookedRoom',
         'bookedRoom.check_out < :checkIn OR bookedRoom.check_in > :checkOut',
-        { checkIn, checkOut },
+        { checkIn: checkInDate, checkOut: checkOutDate },
       );
 
     if (roomType) {

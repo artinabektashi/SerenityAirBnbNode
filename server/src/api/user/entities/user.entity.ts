@@ -23,7 +23,7 @@ export class User extends AuditEntity {
   @Index()
   email: string;
 
-  @Column({ unique: true })
+  @Column({ nullable: true })
   username: string;
 
   @Column({ nullable: true })
