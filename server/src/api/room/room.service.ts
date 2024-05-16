@@ -88,18 +88,18 @@ export class RoomService {
   }
 
   async getAvailableRooms(filterDto: FilterDto): Promise<Room[]> {
-    const { checkInDate, checkOutDate, roomType } = filterDto;
+    const { checkInDate, checkOutDate, room_type } = filterDto;
     let query = this.roomRepository
       .createQueryBuilder('room')
       .leftJoinAndSelect(
         'room.booked_room',
         'bookedRoom',
-        'bookedRoom.check_out < :checkIn OR bookedRoom.check_in > :checkOut',
-        { checkIn: checkInDate, checkOut: checkOutDate },
+        'bookedRoom.checkOutDate < :checkInDate OR bookedRoom.checkInDate > :checkOutDate',
+        { checkInDate: checkInDate, checkOutDate: checkOutDate },
       );
 
-    if (roomType) {
-      query = query.where('room.room_type = :roomType', { roomType });
+    if (room_type) {
+      query = query.where('room.room_type = :room_type', { room_type });
     }
 
     return query.getMany();

@@ -1,5 +1,5 @@
 export class FilterDto {
   checkInDate: Date;
   checkOutDate: Date;
-  roomType?: string;
+  room_type?: string;
 }

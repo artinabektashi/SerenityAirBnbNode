@@ -38,6 +38,7 @@ export class RoomController {
   constructor(private readonly roomService: RoomService) {}
 
   @Post('add/new-room')
+  @Roles(UserRoles.SUPER_ADMIN)
   @UseInterceptors(FileInterceptor('photo', multerOptions))
   async create(
     @Body() createRoomDto: CreateRoomDto,
@@ -71,6 +72,7 @@ export class RoomController {
   }
 
   @Put('update/:id')
+  @Roles(UserRoles.SUPER_ADMIN)
   @UseInterceptors(FileInterceptor('photo', multerOptions))
   async update(
     @Param('id') id: string,
@@ -80,7 +82,7 @@ export class RoomController {
     return this.roomService.update(id, updateRoomDto, photo);
   }
 
-  // @Roles(UserRoles.SUPER_ADMIN)
+  @Roles(UserRoles.SUPER_ADMIN)
   @Delete('delete/room/:id')
   async remove(@Param('id') id: string): Promise<void> {
     return this.roomService.remove(id);

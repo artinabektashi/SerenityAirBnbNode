@@ -19,11 +19,11 @@ import { UserRoles } from '../../user/enums/roles.enum';
 export class RegisterDTO {
   @IsString()
   @ApiProperty()
-  firstName: string;
+  first_name: string;
 
   @IsString()
   @ApiProperty()
-  lastName: string;
+  last_name: string;
 
   @IsEmail()
   @Validate(IsUnique, [User])
