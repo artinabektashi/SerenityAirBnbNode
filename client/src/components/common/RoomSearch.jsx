@@ -9,7 +9,7 @@ const RoomSearch = () => {
   const [searchQuery, setSearchQuery] = useState({
     checkInDate: "",
     checkOutDate: "",
-    roomType: "",
+    room_type: "",
   });
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -32,7 +32,7 @@ const RoomSearch = () => {
     getAvailableRooms(
       searchQuery.checkInDate,
       searchQuery.checkOutDate,
-      searchQuery.roomType
+      searchQuery.room_type
     )
       .then((response) => {
         setAvailableRooms(response.data);
@@ -62,7 +62,7 @@ const RoomSearch = () => {
     setSearchQuery({
       checkInDate: "",
       checkOutDate: "",
-      roomType: "",
+      room_type: "",
     });
     setAvailableRooms([]);
   };
@@ -96,7 +96,7 @@ const RoomSearch = () => {
               </Form.Group>
             </Col>
             <Col xs={12} md={3}>
-              <Form.Group controlId="roomType">
+              <Form.Group controlId="room_type">
                 <Form.Label>Room Type</Form.Label>
                 <div className="d-flex">
                   <RoomTypeSelector

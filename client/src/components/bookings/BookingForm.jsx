@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getRoomById, bookRoom } from "../utils/ApiFunctions";
+import { getRoomById, bookRoom, getUser } from "../utils/ApiFunctions";
 import { useParams, useNavigate } from "react-router-dom";
 import { Form, FormControl } from "react-bootstrap";
 import moment from "moment";
@@ -10,12 +10,14 @@ const BookingForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [roomPrice, setRoomPrice] = useState(0);
+  // eslint-disable-next-line no-unused-vars
+  const [guestEmail, setGuestEmail] = useState("");
 
   const currentUser = localStorage.getItem("userId");
 
   const [booking, setBooking] = useState({
     guestFullName: "",
-    guestEmail: currentUser,
+    guestEmail: "",
     checkInDate: "",
     checkOutDate: "",
     numOfAdults: "",
@@ -24,6 +26,19 @@ const BookingForm = () => {
 
   const { roomId } = useParams();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserEmail = async () => {
+      try {
+        const userData = await getUser(currentUser);
+        setGuestEmail(userData.email);
+        setBooking({ ...booking, guestEmail: userData.email });
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+    fetchUserEmail();
+  }, [currentUser]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

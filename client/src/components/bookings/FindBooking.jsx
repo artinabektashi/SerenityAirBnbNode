@@ -13,8 +13,8 @@ const FindBooking = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [bookingInfo, setBookingInfo] = useState({
     uuid: "",
-    bookingConfirmationCode: "",
-    room: { id: "", room_type: "" },
+    confirmationCode: "",
+    room: { uuid: "", room_type: "" },
     roomNumber: "",
     checkInDate: "",
     checkOutDate: "",
@@ -27,7 +27,7 @@ const FindBooking = () => {
 
   const emptyBookingInfo = {
     uuid: "",
-    bookingConfirmationCode: "",
+    confirmationCode: "",
     room: { uuid: "", room_type: "" },
     roomNumber: "",
     checkInDate: "",
@@ -115,11 +115,11 @@ const FindBooking = () => {
               <tbody>
                 <tr>
                   <th scope="row">Confirmation Code:</th>
-                  <td>{bookingInfo.bookingConfirmationCode}</td>
+                  <td>{bookingInfo.confirmationCode}</td>
                 </tr>
                 <tr>
                   <th scope="row">Room Number:</th>
-                  <td>{bookingInfo.room.id}</td>
+                  <td>{bookingInfo.room.uuid}</td>
                 </tr>
                 <tr>
                   <th scope="row">Room Type:</th>

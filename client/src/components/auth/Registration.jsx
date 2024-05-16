@@ -25,7 +25,12 @@ const Registration = () => {
         `User registered successfully with email: ${result.user.email}`
       );
       setErrorMessage("");
-      setRegistration({ firstName: "", lastName: "", email: "", password: "" });
+      setRegistration({
+        first_name: "",
+        last_name: "",
+        email: "",
+        password: "",
+      });
     } catch (error) {
       setSuccessMessage("");
       setErrorMessage(`Registration error : ${error.message}`);
@@ -52,10 +57,10 @@ const Registration = () => {
       <h2>Register</h2>
       <form onSubmit={handleRegistration}>
         <div className="form-group">
-          <label htmlFor="firstName">First Name</label>
+          <label htmlFor="first_name">First Name</label>
           <input
-            id="firstName"
-            name="firstName"
+            id="first_name"
+            name="first_name"
             type="text"
             className="form-control"
             value={registration.first_name}
@@ -64,10 +69,10 @@ const Registration = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="lastName">Last Name</label>
+          <label htmlFor="last_name">Last Name</label>
           <input
-            id="lastName"
-            name="lastName"
+            id="last_name"
+            name="last_name"
             type="text"
             className="form-control"
             value={registration.last_name}
