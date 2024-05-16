@@ -18,11 +18,11 @@ const FindBooking = () => {
     roomNumber: "",
     checkInDate: "",
     checkOutDate: "",
-    guestName: "",
+    guestFullName: "",
     guestEmail: "",
     numOfAdults: "",
     numOfChildren: "",
-    totalNumOfGuests: "",
+    totalGuests: "",
   });
 
   const emptyBookingInfo = {
@@ -32,11 +32,11 @@ const FindBooking = () => {
     roomNumber: "",
     checkInDate: "",
     checkOutDate: "",
-    guestName: "",
+    guestFullName: "",
     guestEmail: "",
     numOfAdults: "",
     numOfChildren: "",
-    totalNumOfGuests: "",
+    totalGuests: "",
   };
   const [isDeleted, setIsDeleted] = useState(false);
 
@@ -108,7 +108,7 @@ const FindBooking = () => {
           <div>Finding your booking...</div>
         ) : error ? (
           <div className="text-danger">Error: {error}</div>
-        ) : bookingInfo.bookingConfirmationCode ? (
+        ) : bookingInfo.confirmationCode ? (
           <div className="col-md-6 mt-4 mb-5">
             <h3>Booking Information</h3>
             <table className="table">
@@ -143,7 +143,7 @@ const FindBooking = () => {
                 </tr>
                 <tr>
                   <th scope="row">Full Name:</th>
-                  <td>{bookingInfo.guestName}</td>
+                  <td>{bookingInfo.guestFullName}</td>
                 </tr>
                 <tr>
                   <th scope="row">Email Address:</th>
@@ -159,7 +159,7 @@ const FindBooking = () => {
                 </tr>
                 <tr>
                   <th scope="row">Total Guests:</th>
-                  <td>{bookingInfo.totalNumOfGuests}</td>
+                  <td>{bookingInfo.totalGuests}</td>
                 </tr>
               </tbody>
             </table>

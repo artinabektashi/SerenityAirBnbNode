@@ -22,7 +22,7 @@ const Profile = () => {
       room: { uuid: "", room_type: "" },
       checkInDate: "",
       checkOutDate: "",
-      bookingConfirmationCode: "",
+      confirmationCode: "",
     },
   ]);
   const [message, setMessage] = useState("");
@@ -189,7 +189,7 @@ const Profile = () => {
                             .subtract(1, "month")
                             .format("MMM Do, YYYY")}
                         </td>
-                        <td>{booking.bookingConfirmationCode}</td>
+                        <td>{booking.confirmationCode}</td>
                         <td className="text-success">On-going</td>
                       </tr>
                     ))}
