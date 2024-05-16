@@ -11,27 +11,27 @@ import {
 export class CreateBookingDto {
   @ApiProperty()
   @IsNumber()
-  num_of_adults: number;
+  numOfAdults: number;
 
   @ApiProperty({ required: false })
   @IsOptional()
   @IsNumber()
-  num_of_children?: number;
+  numOfChildren?: number;
 
   @ApiProperty()
   @IsDate()
-  check_in: Date;
+  checkInDate: Date;
 
   @ApiProperty()
   @IsDate()
-  check_out: Date;
+  checkOutDate: Date;
 
   @ApiProperty()
   @IsEmail()
-  guest_email: string;
+  guestEmail: string;
 
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  guest_full_name: string;
+  guestFullName: string;
 }

@@ -41,7 +41,7 @@ export class AuthService implements IAuthService {
           ...registerDto,
         }),
       );
-      const tokens = await this.getTokens(user.uuid);
+      const tokens = await this.getTokens(user.uuid, user.role);
       await this.updateRtHash(user.uuid, tokens.refreshToken);
       return { ...tokens, user };
     } catch (error) {
@@ -66,7 +66,7 @@ export class AuthService implements IAuthService {
       throw new BadRequestException('Wrong credentials!');
     }
 
-    const tokens = await this.getTokens(user.uuid);
+    const tokens = await this.getTokens(user.uuid, user.role);
     await this.updateRtHash(user.uuid, tokens.refreshToken);
     return { ...tokens, user };
   }
@@ -89,7 +89,7 @@ export class AuthService implements IAuthService {
       throw new UnauthorizedException();
     }
 
-    const tokens: Tokens = await this.getTokens(user.uuid);
+    const tokens: Tokens = await this.getTokens(user.uuid, user.role);
     await this.updateRtHash(user.uuid, tokens.refreshToken);
     return tokens;
   }
@@ -105,9 +105,10 @@ export class AuthService implements IAuthService {
     await this.userRepository.save(user);
   }
 
-  async getTokens(userId: string): Promise<Tokens> {
+  async getTokens(userId: string, role: number): Promise<Tokens> {
     const jwtPayload: JwtPayload = {
       id: userId,
+      role: role,
     };
 
     const [at, rt] = await Promise.all([

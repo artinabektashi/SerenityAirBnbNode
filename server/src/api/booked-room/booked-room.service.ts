@@ -32,14 +32,14 @@ export class BookedRoomService {
     await this.roomService.updateIsBookedStatus(roomId, true);
 
     const totalGuests =
-      createBookingDto.num_of_adults + (createBookingDto.num_of_children || 0);
+      createBookingDto.numOfAdults + (createBookingDto.numOfChildren || 0);
 
-    const { check_in, check_out } = createBookingDto;
+    const { checkInDate, checkOutDate } = createBookingDto;
 
     const isRoomAvailable = await this.checkRoomAvailability(
       roomId,
-      check_in,
-      check_out,
+      checkInDate,
+      checkOutDate,
     );
     if (!isRoomAvailable) {
       throw new ConflictException(
@@ -50,15 +50,15 @@ export class BookedRoomService {
     const bookedRoom = this.bookedRoomRepository.create({
       ...createBookingDto,
       room: room,
-      total_guests: totalGuests,
-      confirmation_code: confirmationCode,
+      totalGuests: totalGuests,
+      confirmationCode: confirmationCode,
     });
 
     return this.bookedRoomRepository.save(bookedRoom);
   }
 
   async getAllBookings(): Promise<BookedRoom[]> {
-    return this.bookedRoomRepository.find();
+    return this.bookedRoomRepository.find({ relations: { room: true } });
   }
 
   async cancelBooking(bookingId: string): Promise<void> {
@@ -78,7 +78,8 @@ export class BookedRoomService {
     }
 
     return this.bookedRoomRepository.find({
-      where: { guest_email: user.email },
+      where: { guestEmail: user.email },
+      relations: { room: true },
     });
   }
 
@@ -86,7 +87,8 @@ export class BookedRoomService {
     confirmationCode: string,
   ): Promise<BookedRoom> {
     const booking = await this.bookedRoomRepository.findOne({
-      where: { confirmation_code: confirmationCode },
+      where: { confirmationCode: confirmationCode },
+      relations: { room: true },
     });
     if (!booking) {
       throw new NotFoundException('Booking not found');
@@ -102,8 +104,8 @@ export class BookedRoomService {
     const overlappingBooking = await this.bookedRoomRepository.findOne({
       where: {
         room: { uuid: roomId },
-        check_in: LessThanOrEqual(checkOut),
-        check_out: MoreThanOrEqual(checkIn),
+        checkInDate: LessThanOrEqual(checkOut),
+        checkOutDate: MoreThanOrEqual(checkIn),
       },
     });
     return !overlappingBooking;

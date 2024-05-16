@@ -65,14 +65,14 @@ export class RoomController {
     return this.roomService.findOne(id);
   }
 
-  @Patch(':id')
-  @UseInterceptors(FileInterceptor('file', multerOptions))
+  @Put('update/:id')
+  @UseInterceptors(FileInterceptor('photo', multerOptions))
   async update(
     @Param('id') id: string,
     @Body() updateRoomDto: UpdateRoomDto,
-    @UploadedFile() file?: Express.Multer.File,
+    @UploadedFile() photo?: Express.Multer.File,
   ): Promise<Room> {
-    return this.roomService.update(id, updateRoomDto, file);
+    return this.roomService.update(id, updateRoomDto, photo);
   }
 
   @Delete(':id')

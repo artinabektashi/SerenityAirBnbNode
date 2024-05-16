@@ -5,28 +5,28 @@ import { Column, Entity, ManyToOne } from 'typeorm';
 @Entity('booked-room')
 export class BookedRoom extends AuditEntity {
   @Column()
-  num_of_adults: number;
+  numOfAdults: number;
 
   @Column({ nullable: true })
-  num_of_children: number;
+  numOfChildren: number;
 
   @Column({ nullable: true })
-  confirmation_code: string;
+  confirmationCode: string;
 
   @Column({ nullable: true })
-  check_in: Date;
+  checkInDate: Date;
 
   @Column({ nullable: true })
-  check_out: Date;
+  checkOutDate: Date;
 
   @Column({ nullable: true })
-  guest_email: string;
+  guestEmail: string;
 
   @Column({ nullable: true })
-  guest_full_name: string;
+  guestFullName: string;
 
   @Column({ nullable: true })
-  total_guests: number;
+  totalGuests: number;
 
   @ManyToOne(() => Room, (Room: Room) => Room.booked_room)
   room: Room;

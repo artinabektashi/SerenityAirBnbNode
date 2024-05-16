@@ -30,13 +30,11 @@ import { ForgotPasswordDto, ResetPasswordDto } from './dtos/password-reset.dto';
 import { Public } from '../../common/decorators/public.decorator';
 import { RolesGuard } from '../../common/guards/roles.guard';
 
-@Controller('user')
+@Controller('users')
 @ApiBearerAuth()
 @ApiTags('User')
 @UsePipes(new ValidationPipe())
 @UseInterceptors(ClassSerializerInterceptor)
-@UseGuards(PermissionsGuard)
-@UseGuards(RolesGuard)
 export class UserController implements IUserController {
   constructor(private readonly usersService: UserService) {}
 
@@ -47,7 +45,6 @@ export class UserController implements IUserController {
     return `Hello from Hello Method`;
   }
 
-  @Roles(UserRoles.SUPER_ADMIN)
   @Post()
   async create(@Body() createUserDto: CreateUserDto): Promise<User> {
     return await this.usersService.create(createUserDto);
@@ -58,14 +55,11 @@ export class UserController implements IUserController {
     return await this.usersService.findOne(user.uuid);
   }
 
-  // example how roles work
-  @Roles(UserRoles.SUPER_ADMIN)
   @Get(':userId')
   async findOne(@Param('userId') userId: string): Promise<User> {
     return await this.usersService.findOne(userId);
   }
 
-  @Roles(UserRoles.SUPER_ADMIN)
   @Get()
   @UseInterceptors(PaginationInterceptor)
   async findAll(): Promise<User[]> {
@@ -80,7 +74,6 @@ export class UserController implements IUserController {
     return await this.usersService.update(user.uuid, updateUserDto);
   }
 
-  @Roles(UserRoles.SUPER_ADMIN)
   @Patch(':userId')
   async updateUser(
     @Param('userId') userId: string,
@@ -89,13 +82,11 @@ export class UserController implements IUserController {
     return await this.usersService.update(userId, updateUserDto);
   }
 
-  @Roles(UserRoles.SUPER_ADMIN)
   @Delete(':userId')
   async remove(@Param('userId') userId: string): Promise<void> {
     return await this.usersService.remove(userId);
   }
 
-  @Roles(UserRoles.SUPER_ADMIN)
   @Post('add-permission/:userId')
   async addPermission(
     @Param('userId') userId: string,
@@ -104,7 +95,6 @@ export class UserController implements IUserController {
     return this.usersService.addPermission(userId, permission);
   }
 
-  @Roles(UserRoles.SUPER_ADMIN)
   @Post('remove-permission/:userId')
   async removePermission(
     @Param('userId') userId: string,
