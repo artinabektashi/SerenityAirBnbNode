@@ -10,6 +10,7 @@ import {
   Put,
   Query,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
   UsePipes,
   ValidationPipe,
@@ -23,22 +24,26 @@ import { multerOptions } from 'src/common/middlewares/multer.middleware';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Public } from 'src/common/decorators/public.decorator';
 import { FilterDto } from './dtos/filter.dto';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { UserRoles } from '../user/enums/roles.enum';
+import { RolesGuard } from 'src/common/guards/roles.guard';
 
 @Controller('rooms')
 @ApiBearerAuth()
 @ApiTags('Room')
 @UsePipes(new ValidationPipe())
+@UseGuards(RolesGuard)
 @UseInterceptors(ClassSerializerInterceptor)
 export class RoomController {
   constructor(private readonly roomService: RoomService) {}
 
   @Post('add/new-room')
-  @UseInterceptors(FileInterceptor('file', multerOptions))
+  @UseInterceptors(FileInterceptor('photo', multerOptions))
   async create(
     @Body() createRoomDto: CreateRoomDto,
-    @UploadedFile() file?: Express.Multer.File,
+    @UploadedFile() photo?: Express.Multer.File,
   ): Promise<Room> {
-    return this.roomService.create(createRoomDto, file);
+    return this.roomService.create(createRoomDto, photo);
   }
 
   @Public()
@@ -75,7 +80,8 @@ export class RoomController {
     return this.roomService.update(id, updateRoomDto, photo);
   }
 
-  @Delete(':id')
+  // @Roles(UserRoles.SUPER_ADMIN)
+  @Delete('delete/room/:id')
   async remove(@Param('id') id: string): Promise<void> {
     return this.roomService.remove(id);
   }

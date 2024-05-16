@@ -28,6 +28,8 @@ export class BookedRoom extends AuditEntity {
   @Column({ nullable: true })
   totalGuests: number;
 
-  @ManyToOne(() => Room, (Room: Room) => Room.booked_room)
+  @ManyToOne(() => Room, (Room: Room) => Room.booked_room, {
+    onDelete: 'CASCADE',
+  })
   room: Room;
 }

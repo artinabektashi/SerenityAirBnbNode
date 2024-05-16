@@ -17,7 +17,7 @@ export class Room extends AuditEntity {
   photo: string;
 
   @OneToMany(() => BookedRoom, (bookedRoom) => bookedRoom.room, {
-    onDelete: 'CASCADE',
+    cascade: true,
   })
   booked_room: BookedRoom[];
 }
