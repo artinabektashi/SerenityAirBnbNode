@@ -21,7 +21,7 @@ import {
   hashDataBrypt,
 } from '../../services/providers';
 import { IAuthService } from './interfaces/auth.service.interface';
-import { RolePermissions, UserRoles } from '../user/enums/roles.enum';
+
 import { TTokensUser } from './types/user-tokens.type';
 
 @Injectable()

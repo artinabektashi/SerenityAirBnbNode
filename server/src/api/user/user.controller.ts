@@ -13,7 +13,6 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { IUserController } from './interfaces/user.controller.interface';
-import { PermissionsGuard } from '../../common/guards/permissions.guard';
 import { Permission } from '../../common/decorators/permissions.decorator';
 import { UserPermissions } from './enums/permissions.enum';
 import { GetCurrentUser } from '../../common/decorators/get-current-user.decorator';
@@ -23,18 +22,20 @@ import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { PermissinDto } from './dtos/permission.dto';
-import { Roles } from '../../common/decorators/roles.decorator';
-import { UserRoles } from './enums/roles.enum';
 import { PaginationInterceptor } from '../../common/interceptors/pagination.interceptor';
 import { ForgotPasswordDto, ResetPasswordDto } from './dtos/password-reset.dto';
 import { Public } from '../../common/decorators/public.decorator';
-import { RolesGuard } from '../../common/guards/roles.guard';
+import { AtGuard } from 'src/common/guards/at.guard';
+import { PermissionsGuard } from 'src/common/guards/permissions.guard';
+import { RolesGuard } from 'src/common/guards/roles.guard';
 
 @Controller('users')
 @ApiBearerAuth()
 @ApiTags('User')
 @UsePipes(new ValidationPipe())
 @UseInterceptors(ClassSerializerInterceptor)
+@UseGuards(PermissionsGuard)
+@UseGuards(RolesGuard)
 export class UserController implements IUserController {
   constructor(private readonly usersService: UserService) {}
 
@@ -82,7 +83,7 @@ export class UserController implements IUserController {
     return await this.usersService.update(userId, updateUserDto);
   }
 
-  @Delete(':userId')
+  @Delete('delete/:userId')
   async remove(@Param('userId') userId: string): Promise<void> {
     return await this.usersService.remove(userId);
   }

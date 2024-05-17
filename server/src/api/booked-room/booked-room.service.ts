@@ -1,5 +1,6 @@
 import {
   ConflictException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -9,6 +10,7 @@ import { CreateBookingDto } from './dtos/create-booking.dto';
 import { BookedRoom } from './entities/booked-room.entity';
 import { UserService } from '../user/user.service';
 import { LessThanOrEqual, MoreThanOrEqual } from 'typeorm';
+import { User } from '../user/entities/user.entity';
 
 @Injectable()
 export class BookedRoomService {
@@ -84,14 +86,22 @@ export class BookedRoomService {
   }
 
   async getBookingByConfirmationCode(
+    userId: string,
     confirmationCode: string,
   ): Promise<BookedRoom> {
+    const user = await this.userService.findOne(userId);
+
     const booking = await this.bookedRoomRepository.findOne({
       where: { confirmationCode: confirmationCode },
       relations: { room: true },
     });
     if (!booking) {
       throw new NotFoundException('Booking not found');
+    }
+    if (booking.guestEmail !== user.email) {
+      throw new ForbiddenException(
+        'You are not authorized to access this booking',
+      );
     }
     return booking;
   }
