@@ -92,10 +92,10 @@ export async function bookRoom(roomId, booking) {
     );
     return response.data;
   } catch (e) {
-    if (e.response && e.response.data) {
-      throw new Error(e.response.data);
+    if (e.response && e.response.data && e.response.data.message) {
+      throw new Error(e.response.data.message);
     } else {
-      throw new Error(`Something went wrong while booking room! ${e.message}`);
+      throw new Error("Something went wrong while booking the room!");
     }
   }
 }
@@ -115,14 +115,18 @@ export async function getAllBookings() {
 /* This function gets booking by confirmation code from db */
 export async function getBookingByConfirmationCode(confirmationCode) {
   try {
-    const result = await api.get(`/bookings/confirmation/${confirmationCode}`);
+    const result = await api.get(`/bookings/confirmation/${confirmationCode}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return result.data;
   } catch (e) {
-    if (e.response && e.response.data) {
-      throw new Error(e.response.data);
+    if (e.response && e.response.data && e.response.data.message) {
+      throw new Error(e.response.data.message);
     } else {
       throw new Error(
-        `Something went wrong while getting booking by confirmation code! ${e.message}`
+        "Something went wrong while getting booking by confirmation code!"
       );
     }
   }
