@@ -10,7 +10,6 @@ import { CreateBookingDto } from './dtos/create-booking.dto';
 import { BookedRoom } from './entities/booked-room.entity';
 import { UserService } from '../user/user.service';
 import { LessThanOrEqual, MoreThanOrEqual } from 'typeorm';
-import { User } from '../user/entities/user.entity';
 
 @Injectable()
 export class BookedRoomService {

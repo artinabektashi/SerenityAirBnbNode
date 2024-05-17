@@ -25,7 +25,6 @@ import { PermissinDto } from './dtos/permission.dto';
 import { PaginationInterceptor } from '../../common/interceptors/pagination.interceptor';
 import { ForgotPasswordDto, ResetPasswordDto } from './dtos/password-reset.dto';
 import { Public } from '../../common/decorators/public.decorator';
-import { AtGuard } from 'src/common/guards/at.guard';
 import { PermissionsGuard } from 'src/common/guards/permissions.guard';
 import { RolesGuard } from 'src/common/guards/roles.guard';
 

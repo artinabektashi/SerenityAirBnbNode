@@ -19,7 +19,6 @@ import { BookedRoom } from './entities/booked-room.entity';
 import { Public } from 'src/common/decorators/public.decorator';
 import { GetCurrentUser } from 'src/common/decorators/get-current-user.decorator';
 import { User } from '../user/entities/user.entity';
-import { GetCurrentUserId } from 'src/common/decorators/get-current-user-id.decorator';
 import { PermissionsGuard } from 'src/common/guards/permissions.guard';
 import { RolesGuard } from 'src/common/guards/roles.guard';
 
